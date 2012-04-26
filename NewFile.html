@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <title>enchant</title>
+        <script type="text/javascript" src="enchant.js"></script>
+        <script type="text/javascript" src="game.js"></script>
+        <style type="text/css">
+            body {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+
+<script type="text/javascript">
+
+enchant();
+window.onload = function() {
+    var game = new Game(320, 320);
+    game.preload('chara0.gif');
+    game.onload = function() {
+        var player = new Sprite(16, 24);
+        player.image = game.assets['chara0.gif'];
+        game.rootScene.addChild(player);
+        player.direction = 0;
+        player.walk=0;
+        player.addEventListener('enterframe', function(e) {
+            if (game.input.left){this.x -= 1.0;this.direction = 1;}
+            if (game.input.right){this.x += 1.0;this.direction = 2;}
+            if (game.input.up) {this.y -= 1.0;this.direction = 3;}
+            if (game.input.down){ this.y += 1.0;this.direction = 0;}
+            if (!(game.frame % 5)){this.walk++;}
+            if(this.walk == 3){this.walk = 0;}
+            this.frame = this.direction*6 + this.walk;
+        });
+    }
+    game.start();
+}
+
+
+</script>
+
+    </body>
+</html>
